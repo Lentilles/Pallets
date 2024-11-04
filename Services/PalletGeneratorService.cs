@@ -1,18 +1,18 @@
 ﻿using Pallets.Interfaces;
 using Pallets.Models;
+using Pallets.Repositories;
 
 namespace Pallets.Generator
 {
-    public class PalletGenerator : IGenerator<Pallet>
+    public class PalletGeneratorService : IGenerator<Pallet>
     {
-        public readonly Size MinSize;
-        public readonly Size MaxSize;
+        public Size MinSize = Size.DefaultMinSize;
+        public Size MaxSize = Size.DefaultMaxSize;
 
-
-        public PalletGenerator(Size minSize, Size maxSize)
+        private readonly IPalletRepository _palletRepository;
+        public PalletGeneratorService(IPalletRepository palletRepository)
         {
-            MinSize = minSize;
-            MaxSize = maxSize;
+            _palletRepository = palletRepository;
         }
 
         public IEnumerable<Pallet> Generate(int count)

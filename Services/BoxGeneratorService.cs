@@ -1,25 +1,14 @@
 ﻿using Pallets.Interfaces;
 using Pallets.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Pallets.Repositories;
 
 namespace Pallets.Generator
 {
-    public class BoxGenerator : IGenerator<Box>
+    public class BoxGeneratorService : IGenerator<Box>
     {
-        public readonly Size MinSize;
-        public readonly Size MaxSize;
-        public readonly int MaxAddDaysToShelfLife;
-
-        public BoxGenerator(Size minSize, Size maxSize, int maxAddDaysToShelfLife)
-        {
-            MinSize = minSize;
-            MaxSize = maxSize;
-            MaxAddDaysToShelfLife = maxAddDaysToShelfLife;
-        }
+        public Size MinSize = Size.DefaultMinSize;
+        public Size MaxSize = Size.DefaultMaxSize;
+        public int MaxAddDaysToShelfLife = 366;
 
         public IEnumerable<Box> Generate(int count)
         {
@@ -40,6 +29,8 @@ namespace Pallets.Generator
 
                 yield return Box.CreateBoxByShelfLife(size, weight, shelfLife);
             }
+
+
         }
     }
 }
