@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Pallets.Models;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Pallets.Views
 {
@@ -13,6 +10,11 @@ namespace Pallets.Views
 
         private const string GenerationSuccess = "Генерация прошла успешно.";
         private const string GenerationFailure = "Ошибка генерации";
+
+        private const string AddingBoxesOnPalletInfoText = "Информация о добавлении коробок на палет с ID: ";
+        private const string AddingBoxesOnPalletSuccessText = "На палет успешно было загружено коробок: ";
+        private const string AddingBoxesOnPalletFailureText = "Количество коробок которое не поместилось на палет: ";
+
         public static int AskGenerationCount()
         {
             int count = 0;
@@ -24,6 +26,21 @@ namespace Pallets.Views
             }
 
             return count;
+        }
+
+
+        public static void AddingBoxesOnPalletResult(ILoadPalletResult result)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            builder.AppendLine(AddingBoxesOnPalletInfoText)
+                .Append(result.PalletId.ToString())
+                .AppendLine(AddingBoxesOnPalletSuccessText)
+                .Append(result.LoadedCount)
+                .AppendLine(AddingBoxesOnPalletFailureText)
+                .Append(result.SkipedCount);
+
+            Console.WriteLine(builder);
         }
     }
 }
