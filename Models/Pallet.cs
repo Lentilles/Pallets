@@ -13,7 +13,7 @@
         }
         public List<Box> Boxes = new List<Box>();
 
-        public bool TryAddBox(Box box)
+        public ILoadPalletResult AddBox(Box box)
         {
             var isBoxFitOnPallet = box.Size.Width <= Size.Width && box.Size.Depth <= Size.Depth;
             
@@ -22,21 +22,31 @@
                 Boxes.Add(box);
             }
 
-            return isBoxFitOnPallet;
+            return new LoadPalletResult()
+            {
+                PalletId = Id,
+                LoadedCount = isBoxFitOnPallet ? 1 : 0,
+                SkipedCount = isBoxFitOnPallet ? 0 : 1
+            };
         }
 
-        public bool TryAddBoxRange(IEnumerable<Box> boxes)
+        public ILoadPalletResult AddBoxRange(IEnumerable<Box> boxes)
         {
-            var isAllBoxesFitOnPallet = boxes
-                .Where(box => box.Size.Width <= Size.Width && box.Size.Depth <= Size.Depth)
-                .Count() == boxes.Count();
+            var suitableBoxes = boxes
+                .Where(box => box.Size.Width <= Size.Width && box.Size.Depth <= Size.Depth);
+            
+            Boxes.AddRange(suitableBoxes);
 
-            if (isAllBoxesFitOnPallet)
+            var countOfSuitableBoxes = suitableBoxes.Count();
+
+            return new LoadPalletResult()
             {
-                Boxes.AddRange(boxes);
-            }
-
-            return isAllBoxesFitOnPallet;
+                PalletId = Id,
+                LoadedCount = countOfSuitableBoxes,
+                SkipedCount = boxes.Count() - countOfSuitableBoxes
+            };
         }
     }
+
+
 }
