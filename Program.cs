@@ -1,44 +1,46 @@
 ﻿using Pallets.Generator;
 using Pallets.Models;
+using Pallets.Repositories;
+using Pallets.Services;
 using Pallets.Views;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        List<Pallet> pallets = new List<Pallet>();
-
-
         var menuVariant = BaseMenu.ShowMenu();
+        var palletRepository = new NonDbPalletRepository();
 
         switch (menuVariant)
         {
             case 1:
                 {
                     var palletCount = GenerationMenu.AskGenerationCount();
+                    var pallets = palletRepository.Pallets as List<Pallet>;
 
-                    PalletGenerator palletGenerator = new PalletGenerator(Size.DefaultMinSize, Size.DefaultMaxSize);
+                    PalletGeneratorService palletGenerator = new PalletGeneratorService(palletRepository);
                     pallets.AddRange(palletGenerator.Generate(palletCount));
 
                     var maxBoxCount = GenerationMenu.AskGenerationCount();
 
-                    BoxGenerator boxGenerator = new BoxGenerator(Size.DefaultMinSize, Size.DefaultMaxSize, 366);
+                    BoxGeneratorService boxGenerator = new BoxGeneratorService();
                     Random random = new Random();
 
                     foreach(var pallet in pallets)
                     {
-                        if (pallet.TryAddBoxRange(boxGenerator.Generate(random.Next(maxBoxCount))))
-                        {
-                            
-                        }
+                        var loadResult = pallet.AddBoxRange(boxGenerator.Generate(random.Next(maxBoxCount)));
+                        GenerationMenu.AddingBoxesOnPalletResult(loadResult);
                     }
-
 
                     break;
                 }
             case 2:
                 {
-                    
+                    var palletService = new PalletService(palletRepository);
+
+                    var groupedPallets = palletService.GetAllPalletsGroupedByShelfLife();
+
+                    PalletMenu.ShowGroupedAndOrderedPallets(groupedPallets);
 
                     break;
                 }
