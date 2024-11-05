@@ -5,13 +5,13 @@ namespace Pallets.Repositories
     public interface IPalletRepository
     {
         public IEnumerable<Pallet> Pallets { get; set; }
-        public IEnumerable<IGrouping<DateOnly, Pallet>> GetAllPalletsGroupedByShelfLife();
+        public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife();
     }
 
     public class NonDbPalletRepository : IPalletRepository
     {
         public IEnumerable<Pallet> Pallets { get; set; } = new List<Pallet>();
-        public IEnumerable<IGrouping<DateOnly, Pallet>> GetAllPalletsGroupedByShelfLife()
+        public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife()
         {
             var grouped = from pallet in Pallets
                           group pallet by pallet.ShelfLife;

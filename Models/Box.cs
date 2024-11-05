@@ -5,7 +5,7 @@
         public Guid Id { get; set; }
         public Size Size { get; set; }
         public decimal Weight { get; set; }
-        public DateOnly ShelfLife { get { return ShelfLife; } private set { ShelfLife = value; } }
+        public DateOnly ShelfLife { get; private set; }
 
         public static Box CreateBoxByProductionDate(Size size, DateOnly productionDate)
         {
@@ -21,6 +21,7 @@
             return new Box
             {
                 Size = size,
+                Weight = weight,
                 ShelfLife = shelfLife
             };
         }

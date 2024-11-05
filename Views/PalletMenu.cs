@@ -9,9 +9,7 @@ namespace Pallets.Views
 {
     public static class PalletMenu
     {
-
-
-        public static void ShowGroupedAndOrderedPallets(IEnumerable<IGrouping<DateOnly, Pallet>> groups)
+        public static void ShowGroupedAndOrderedPallets(IEnumerable<IGrouping<DateOnly?, Pallet>> groups)
         {
             foreach(var group in groups)
             {

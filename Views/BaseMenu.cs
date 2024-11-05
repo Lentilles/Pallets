@@ -11,6 +11,7 @@ namespace Pallets.Views
             "в каждой группе отсортировать паллеты по весу";
         private const string ShowPalletsText = "3. 3 паллеты, которые содержат коробки с наибольшим сроком годности, " +
             "отсортированные по возрастанию объема.";
+        private const string ExitText = "0. Выход";
 
         private const string ParseErrorText = "Выберите пункт меню (1-3)";
 
@@ -21,7 +22,8 @@ namespace Pallets.Views
             choseOptions.AppendLine(ChoseText)
                 .AppendLine(GenerateDataText)
                 .AppendLine(ShowGroupedText)
-                .AppendLine(ShowPalletsText);
+                .AppendLine(ShowPalletsText)
+                .AppendLine(ExitText);
 
             Console.WriteLine(choseOptions);
 

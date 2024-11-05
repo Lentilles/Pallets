@@ -29,8 +29,6 @@ namespace Pallets.Generator
 
                 yield return Box.CreateBoxByShelfLife(size, weight, shelfLife);
             }
-
-
         }
     }
 }

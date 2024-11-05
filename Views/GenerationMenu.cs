@@ -33,12 +33,12 @@ namespace Pallets.Views
         {
             StringBuilder builder = new StringBuilder();
 
-            builder.AppendLine(AddingBoxesOnPalletInfoText)
-                .Append(result.PalletId.ToString())
-                .AppendLine(AddingBoxesOnPalletSuccessText)
-                .Append(result.LoadedCount)
-                .AppendLine(AddingBoxesOnPalletFailureText)
-                .Append(result.SkipedCount);
+            builder.Append(AddingBoxesOnPalletInfoText)
+                .AppendLine(result.PalletId.ToString())
+                .Append(AddingBoxesOnPalletSuccessText)
+                .AppendLine(result.LoadedCount.ToString())
+                .Append(AddingBoxesOnPalletFailureText)
+                .AppendLine(result.SkipedCount.ToString());
 
             Console.WriteLine(builder);
         }

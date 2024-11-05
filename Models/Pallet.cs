@@ -5,10 +5,17 @@
         public Guid Id { get; set; }
         public Size Size { get; set; }
         public decimal Weight { get { return 30 + Boxes.Sum(x => x.Weight); } }
-        public DateOnly ShelfLife { 
+        public DateOnly? ShelfLife { 
             get 
             {
-                return Boxes.Min(x => x.ShelfLife); 
+                if(Boxes.Count != 0)
+                {
+                    return Boxes.Min(x => x.ShelfLife); 
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         public List<Box> Boxes = new List<Box>();

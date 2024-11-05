@@ -5,7 +5,7 @@ namespace Pallets.Services
 {
     public interface IPalletService
     {
-        public IEnumerable<IGrouping<DateOnly, Pallet>> GetAllPalletsGroupedByShelfLife();
+        public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife();
     }
     public class PalletService : IPalletService
     {
@@ -15,7 +15,7 @@ namespace Pallets.Services
             _palletRepository = palletRepository;
         }
 
-        public IEnumerable<IGrouping<DateOnly, Pallet>> GetAllPalletsGroupedByShelfLife()
+        public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife()
         {
             return _palletRepository.GetAllPalletsGroupedByShelfLife();
         }
