@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Pallets.Models;
+using System.Text;
 
 namespace Pallets.Views
 {
@@ -15,7 +16,7 @@ namespace Pallets.Views
 
         private const string ParseErrorText = "Выберите пункт меню (1-3)";
 
-        public static int ShowMenu()
+        public static MenuOption ShowMenu()
         {
             StringBuilder choseOptions = new StringBuilder();
 
@@ -35,7 +36,7 @@ namespace Pallets.Views
                 Console.WriteLine(ParseErrorText);
             }
 
-            return chose;
+            return (MenuOption)chose;
         }
     }
 }
