@@ -8,15 +8,17 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        int menuVariant = -1;
+        MenuOption menuVariant = MenuOption.Generate;
         var palletRepository = new NonDbPalletRepository();
-        
-        while (menuVariant != 0)
+        var palletService = new PalletService(palletRepository);
+
+
+        while (menuVariant != MenuOption.Exit)
         {
             menuVariant = BaseMenu.ShowMenu();
             switch (menuVariant)
             {
-                case 1:
+                case MenuOption.Generate:
                     {
                         var palletCount = GenerationMenu.AskGenerationCount();
                         var pallets = palletRepository.Pallets as List<Pallet>;
@@ -38,24 +40,30 @@ internal class Program
                         palletRepository.Pallets = pallets;
                         break;
                     }
-                case 2:
+                case MenuOption.ShowGroupedPallets:
                     {
-                        var palletService = new PalletService(palletRepository);
-
-                        
                         var groupedPallets = palletService.GetAllPalletsGroupedByShelfLife();
+
+                        groupedPallets = PalletViewHelper.SortPalletsInGroupByWeight(groupedPallets);
+                        groupedPallets = PalletViewHelper.SortGroupsByShelfLife(groupedPallets);
 
                         PalletMenu.ShowGroupedAndOrderedPallets(groupedPallets);
 
                         break;
                     }
-                case 3:
+                case MenuOption.ShowPalletsWithLongestShelfLife:
                     {
+                        var pallets = palletService.GetPalletsWithLongestShelfLife(3);
+                        pallets = PalletViewHelper.SortPalletsByVolume(pallets);
 
+                        foreach(var pallet in pallets)
+                        {
+                            Console.WriteLine($"{pallet.Id} \t | \t {pallet.ShelfLife} \t | \t {pallet.Volume}");
+                        }
 
                         break;
                     }
-
+                default: { return; }
             }
         }
     }
