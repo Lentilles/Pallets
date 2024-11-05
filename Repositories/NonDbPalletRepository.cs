@@ -6,6 +6,7 @@ namespace Pallets.Repositories
     {
         public IEnumerable<Pallet> Pallets { get; set; }
         public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife();
+        public IEnumerable<Pallet> GetPalletsWithLongestShelfLife(int count);
     }
 
     public class NonDbPalletRepository : IPalletRepository
@@ -13,16 +14,13 @@ namespace Pallets.Repositories
         public IEnumerable<Pallet> Pallets { get; set; } = new List<Pallet>();
         public IEnumerable<IGrouping<DateOnly?, Pallet>> GetAllPalletsGroupedByShelfLife()
         {
-            var grouped = from pallet in Pallets
-                          group pallet by pallet.ShelfLife;
-
-            return from g in grouped
-                   from pallet in g
-                   orderby pallet.Weight
-                   orderby g.Key
-                   select g;
+            return from pallet in Pallets
+                     group pallet by pallet.ShelfLife;
         }
 
-
+        public IEnumerable<Pallet> GetPalletsWithLongestShelfLife(int count)
+        {
+            return Pallets.Where(pallet=>pallet.ShelfLife != null).OrderByDescending(pallet => pallet.ShelfLife).Take(count);
+        }
     }
 }
