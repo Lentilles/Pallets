@@ -5,6 +5,7 @@
         public Guid Id { get; set; }
         public Size Size { get; set; }
         public decimal Weight { get { return 30 + Boxes.Sum(x => x.Weight); } }
+        public long Volume { get { return Size.GetVolume() + Boxes.Sum(box=>box.Size.GetVolume()); } }
         public DateOnly? ShelfLife { 
             get 
             {
