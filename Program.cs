@@ -56,10 +56,7 @@ internal class Program
                         var pallets = palletService.GetPalletsWithLongestShelfLife(3);
                         pallets = PalletViewHelper.SortPalletsByVolume(pallets);
 
-                        foreach(var pallet in pallets)
-                        {
-                            Console.WriteLine($"{pallet.Id} \t | \t {pallet.ShelfLife} \t | \t {pallet.Volume}");
-                        }
+                        PalletMenu.ShowPalletsWithLongestShelfLife(pallets);
 
                         break;
                     }
