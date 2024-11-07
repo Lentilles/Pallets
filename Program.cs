@@ -20,12 +20,14 @@ internal class Program
             {
                 case MenuOption.Generate:
                     {
+                        GenerationMenu.ShowPalletGenerationMessage();
                         var palletCount = GenerationMenu.AskGenerationCount();
                         var pallets = palletRepository.Pallets as List<Pallet>;
 
                         PalletGeneratorService palletGenerator = new PalletGeneratorService(palletRepository);
                         pallets.AddRange(palletGenerator.Generate(palletCount));
 
+                        GenerationMenu.ShowMaxBoxCountGenerationMessage();
                         var maxBoxCount = GenerationMenu.AskGenerationCount();
 
                         BoxGeneratorService boxGenerator = new BoxGeneratorService();

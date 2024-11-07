@@ -15,6 +15,19 @@ namespace Pallets.Views
         private const string AddingBoxesOnPalletSuccessText = "На палет успешно было загружено коробок: ";
         private const string AddingBoxesOnPalletFailureText = "Количество коробок которое не поместилось на палет: ";
 
+        private const string PalletGenerationMessage = "Ввод количества паллетов для генерации";
+        private const string BoxGenerationMessage = "Ввод максимального количества коробок для генерации в паллеты";
+        public static void ShowPalletGenerationMessage()
+        {
+            Console.WriteLine(PalletGenerationMessage);
+        }
+
+        public static void ShowMaxBoxCountGenerationMessage()
+        {
+            Console.WriteLine(BoxGenerationMessage);
+        }
+
+
         public static int AskGenerationCount()
         {
             int count = 0;
